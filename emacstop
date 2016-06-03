@@ -25,6 +25,12 @@
 (setq scroll-step           1
       scroll-conservatively 10000 )
 
+;; NeoTree
+(global-set-key "\C-x\C-n" 'neotree-toggle)
+
+;; never close Emacs on accident
+(global-set-key "\C-x\C-c" nil)
+
 ;; updates .zshrc to emacs
 (let ((path (shell-command-to-string ". ~/.zshrc; echo -n $PATH")))
   (setenv "PATH" path)
@@ -42,6 +48,8 @@
 	  (lambda ()
 	    (load-theme 'tango-plus t)
 	    (set-cursor-color "#5f615c")
+	    (abbrev-mode t)
+	    (auto-complete-mode t)
 	    ;;   (load-theme 'zenburn t)))
 	    t))
 
