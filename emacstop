@@ -46,8 +46,11 @@
 ;; hook for some reason >_>
 (add-hook 'after-init-hook
 	  (lambda ()
+	    (require 'pabbrev)
+	    (require 'abbrev)
 	    (load-theme 'tango-plus t)
 	    (set-cursor-color "#5f615c")
+	    (pabbrev-mode t)
 	    (abbrev-mode t)
 	    (auto-complete-mode t)
 	    ;;   (load-theme 'zenburn t)))
@@ -103,6 +106,10 @@
 	    ;;
 	    (pabbrev-mode t);
 	    t))
+
+;; elisp mode for these files
+(add-to-list 'auto-mode-alist '("emacsdesk" . js3-mode))
+(add-to-list 'auto-mode-alist '("emacstop" . js3-mode))
 
 (add-to-list 'auto-mode-alist '("\\.js\\'" . js3-mode))
 (add-hook 'js3-mode-hook

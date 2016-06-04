@@ -38,31 +38,12 @@
 ;; pabbrev mode wonder goodies
 (add-hook  'after-init-hook
 	   (lambda ()
+	     (require 'abbrev)
 	     (require 'pabbrev)
+	     (abbrev-mode t)
+	     (pabbrev-mode t)	     
 	     (define-key pabbrev-mode-map [tab] 'pabbrev-expand-maybe)
-	     (require 'popup)
-	     (defun pabbrevx-suggestions-goto-buffer (suggestions)
-	       (let* ((candidates (mapcar 'car suggestions))
-		      (bounds (pabbrev-bounds-of-thing-at-point))
-		      (selection (popup-menu* candidates
-					      :point (car bounds)
-					      :scroll-bar t)))
-		 (when selection
-		   ;; modified version of pabbrev-suggestions-insert
-		   (let ((point))
-		     (save-excursion
-		       (progn
-			 (delete-region (car bounds) (cdr bounds))
-			 (insert selection)
-			 (setq point (point))))
-		     (if point
-			 (goto-char point))
-		     ;; need to nil this so pabbrev-expand-maybe-full won't try
-		     ;; pabbrev expansion if user hits another TAB after ac aborts
-		     (setq pabbrev-last-expansion-suggestions nil)
-		     ))))
-	     (fset 'pabbrev-suggestions-goto-buffer 'pabbrevx-suggestions-goto-buffer)
-
+	     (auto-complete-mode t)
 	     t))
 
 ;; updates .zshrc to emacs
@@ -95,9 +76,15 @@
 	    (auto-fill-mode t)
 	    t))
 
+;; elisp mode for these files
+(add-to-list 'auto-mode-alist '("emacsdesk" . js3-mode))
+(add-to-list 'auto-mode-alist '("emacstop" . js3-mode))
+
 (add-to-list 'auto-mode-alist '("\\.js\\'" . js3-mode))
 (add-hook 'js3-mode-hook
 	  (lambda ()
+	    (auto-complete-mode t)
+	    (pabbrev-mode t)
 	    t))
 
 ;; org-mode grobals
